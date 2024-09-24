@@ -1,0 +1,94 @@
+ORG 8000H
+A: DB 0
+i: DB 0
+ORG 0
+LXI H,0
+SPHL
+PUSH B
+CALL main
+END
+@MUL
+@DIV
+@PRINT
+
+
+main:
+PUSH B
+PUSH B
+
+	; IN block
+IN 0
+STA A
+
+	; MOV block
+MVI A, 0
+STA i
+$L0:
+
+	; MOV block
+MVI A, 1
+LXI H, 2
+DAD SP
+MOV M, A
+
+	; LT block
+LDA A
+MOV B, A
+LDA i
+CMP B
+JM $L2
+
+	; MOV block
+MVI A, 0
+LXI H, 2
+DAD SP
+MOV M, A
+$L2:
+
+	; EQ block
+MVI A, 0
+MOV B, A
+LXI H, 2
+DAD SP
+MOV A, M
+CMP B
+JZ $L1
+
+	; MOV block
+LDA i
+LXI H, 0
+DAD SP
+MOV M, A
+
+	; ADD block
+MVI A, 1
+MOV B, A
+LDA i
+ADD B
+STA i
+
+	; OUT block
+LXI H, 0
+DAD SP
+MOV A, M
+OUT 1
+JMP $L0
+$L1:
+
+	; RET block
+MVI A, 0
+LXI H, 6
+DAD SP
+MOV M, A
+POP
+POP
+RET
+
+	; RET block
+MVI A, 0
+LXI H, 6
+DAD SP
+MOV M, A
+POP
+POP
+RET

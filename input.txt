@@ -1,0 +1,9 @@
+int A, i;
+int main(){
+	in A;
+	i = 0;
+	while(i < A){
+	out i++;
+	}
+	return 0;
+}
